@@ -215,9 +215,10 @@ class AccountDashboardBannerCell(models.Model):
         ) = self._prepare_cell_data_customer_debt(company, speedy)
         specific_domain = expression.OR(
             [
+                [("date_maturity", "=", False)],
                 [("date_maturity", "<", speedy["today"])],
                 [
-                    ("date_maturity", "<=", speedy["today"]),
+                    ("date_maturity", "=", speedy["today"]),
                     ("journal_id.type", "!=", "sale"),
                 ],
             ]
