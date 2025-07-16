@@ -21,8 +21,7 @@ Many cell types are available:
 - **Supplier Debt**: it displays the ending balance of the default
   *Account Payable*.
 - **Lock dates**: all the lock dates are available: *Tax Return Lock
-  Date*, *Sales Lock Date*, *Purchase Lock Date*, *Global Lock Date* and
-  *Hard Lock Date*.
+  Date*, *Journals Entries Lock Date* and *All Users Lock Date*.
 
 The module is designed to allow the modification of the computation of
 the different cell types by inheriting the method

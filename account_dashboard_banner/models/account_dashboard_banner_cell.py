@@ -29,10 +29,8 @@ class AccountDashboardBannerCell(models.Model):
             ("supplier_debt", "Supplier Debt"),
             # for lock dates, the key matches exactly the field name on res.company
             ("tax_lock_date", "Tax Return Lock Date"),
-            ("sale_lock_date", "Sales Lock Date"),
-            ("purchase_lock_date", "Purchase Lock Date"),
-            ("fiscalyear_lock_date", "Global Lock Date"),
-            ("hard_lock_date", "Hard Lock Date"),
+            ("period_lock_date", "Journals Entries Lock Date"),
+            ("fiscalyear_lock_date", "All Users Lock Date"),
         ],
         required=True,
     )
@@ -93,10 +91,8 @@ class AccountDashboardBannerCell(models.Model):
     def _default_warn_lock_date_days(self, cell_type):
         defaultmap = {
             "tax_lock_date": 61,  # 2 months
-            "sale_lock_date": 35,  # 1 month + a few days
-            "purchase_lock_date": 61,
-            "fiscalyear_lock_date": 61,  # 2 months
-            "hard_lock_date": 520,  # FY final closing, 1 year + 5 months
+            "period_lock_date": 61,  # 2 months
+            "fiscalyear_lock_date": 520,  # FY final closing, 1 year + 5 months
         }
         return defaultmap.get(cell_type)
 
@@ -124,19 +120,17 @@ class AccountDashboardBannerCell(models.Model):
     def _prepare_speedy(self, company):
         lock_date_fields = [
             "tax_lock_date",
-            "sale_lock_date",
-            "purchase_lock_date",
+            "period_lock_date",
             "fiscalyear_lock_date",
-            "hard_lock_date",
         ]
         speedy = {
             "cell_type2label": dict(
                 self.fields_get("cell_type", "selection")["cell_type"]["selection"]
             ),
-            "lock_date2help": dict(
-                (key, value["help"])
+            "lock_date2help": {
+                key: value["help"]
                 for (key, value) in company.fields_get(lock_date_fields, "help").items()
-            ),
+            },
             "today": fields.Date.context_today(self),
         }
         return speedy
@@ -172,10 +166,8 @@ class AccountDashboardBannerCell(models.Model):
         return (accounts, 1, False, False)
 
     def _prepare_cell_data_supplier_debt(self, company, speedy):
-        accounts = (
-            self.env["res.partner"]
-            ._fields["property_account_payable_id"]
-            .get_company_dependent_fallback(self.env["res.partner"])
+        accounts = self.env["ir.property"]._get(
+            "property_account_payable_id", "res.partner"
         )
         return (accounts, -1, False, False)
 
@@ -183,7 +175,7 @@ class AccountDashboardBannerCell(models.Model):
         cell_type = self.cell_type
         accounts = self.env["account.account"].search(
             [
-                ("company_ids", "in", [company.id]),
+                ("company_id", "=", company.id),
                 ("account_type", "in", ("income", "income_other")),
             ]
         )
@@ -207,19 +199,20 @@ class AccountDashboardBannerCell(models.Model):
         return (accounts, -1, specific_domain, specific_tooltip)
 
     def _prepare_cell_data_customer_debt(self, company, speedy):
-        accounts = (
-            self.env["res.partner"]
-            ._fields["property_account_receivable_id"]
-            .get_company_dependent_fallback(self.env["res.partner"])
+        accounts = self.env["ir.property"]._get(
+            "property_account_receivable_id", "res.partner"
         )
         if hasattr(company, "account_default_pos_receivable_account_id"):
             accounts |= company.account_default_pos_receivable_account_id
         return (accounts, 1, False, False)
 
     def _prepare_cell_data_customer_overdue(self, company, speedy):
-        accounts, sign, specific_domain, specific_tooltip = (
-            self._prepare_cell_data_customer_debt(company, speedy)
-        )
+        (
+            accounts,
+            sign,
+            specific_domain,
+            specific_tooltip,
+        ) = self._prepare_cell_data_customer_debt(company, speedy)
         specific_domain = expression.OR(
             [
                 [("date_maturity", "<", speedy["today"])],
@@ -258,9 +251,12 @@ class AccountDashboardBannerCell(models.Model):
                     company, speedy
                 )
             elif cell_type.startswith("income_"):
-                accounts, sign, specific_domain, specific_tooltip = (
-                    self._prepare_cell_data_income(company, speedy)
-                )
+                (
+                    accounts,
+                    sign,
+                    specific_domain,
+                    specific_tooltip,
+                ) = self._prepare_cell_data_income(company, speedy)
             if accounts:
                 domain = (specific_domain or []) + [
                     ("company_id", "=", company.id),
@@ -269,10 +265,10 @@ class AccountDashboardBannerCell(models.Model):
                     ("parent_state", "=", "posted"),
                 ]
                 rg_res = self.env["account.move.line"]._read_group(
-                    domain, aggregates=["balance:sum"]
+                    domain, ["balance:sum"], []
                 )
                 assert sign in (1, -1)
-                raw_value = rg_res and rg_res[0][0] * sign or 0
+                raw_value = (rg_res and rg_res[0].get("balance") or 0) * sign
                 value = format_amount(self.env, raw_value, company.currency_id)
                 tooltip = _(
                     "Balance of account(s) %(account_codes)s%(specific)s.",
