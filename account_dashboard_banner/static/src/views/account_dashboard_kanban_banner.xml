@@ -26,7 +26,7 @@
                 <div
                         id="cell_banner_ok"
                         t-if="!cell_data.warn"
-                        t-attf-class="o_arrow_button flex-grow-1 d-flex flex-column p-1 text-center cursor-pointer"
+                        t-attf-class="o_arrow_button flex-grow-1 d-flex flex-column p-1 text-center"
                         t-att-data-tooltip="cell_data['tooltip']"
                     >
                     <strong class="mx-2" t-out="cell_data['label']" />
@@ -35,7 +35,7 @@
                 <div
                         id="cell_banner_warn"
                         t-if="cell_data.warn"
-                        t-attf-class="o_arrow_button flex-grow-1 d-flex flex-column p-1 text-center cursor-pointer alert alert-warning"
+                        t-attf-class="o_arrow_button flex-grow-1 d-flex flex-column p-1 text-center alert alert-warning"
                         t-att-data-tooltip="cell_data['tooltip']"
                     >
                     <strong class="mx-2" t-out="cell_data['label']" />
