@@ -5,10 +5,10 @@
 
 {
     "name": "Account Asset Management xlsx",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Accounting",
     "summary": "account_asset_management_xlsx",
-    "author": "Simon Mas,  Ân Lê Hoàng",
+    "author": "Simon Mas,  Ân Lê Hoàng, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-financial-tools",
     "license": "AGPL-3",
     "depends": [
@@ -16,6 +16,7 @@
         "report_xlsx",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "report/report_account_asset_xlsx.xml",
         "wizard/account_asset_xlsx_wizard.xml",
     ],

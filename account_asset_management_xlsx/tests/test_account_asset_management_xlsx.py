@@ -12,23 +12,21 @@ class TestAccountAssetReport(TransactionCase):
         )
         account_obj = self.env["account.account"]
         self.asset_account = account_obj.search(
-            [("user_type_id.name", "=", "Current Assets")], limit=1
+            [("account_type", "=", "asset_current")], limit=1
         )
         self.depr_account = account_obj.search(
-            [("user_type_id.name", "=", "Depreciation")], limit=1
+            [("account_type", "=", "expense_depreciation")], limit=1
         )
         if not self.depr_account:
             self.depr_account = account_obj.create(
                 {
                     "name": "Test Depreciation Account",
                     "code": "TDA1",
-                    "user_type_id": self.env["account.account.type"]
-                    .search([("name", "=", "Depreciation")], limit=1)
-                    .id,
+                    "account_type": "expense_depreciation",
                 }
             )
         self.expense_depr_account = account_obj.search(
-            [("user_type_id.name", "=", "Expenses")], limit=1
+            [("account_type", "=", "expense")], limit=1
         )
         self.asset_profile = self.env["account.asset.profile"].create(
             {

@@ -18,7 +18,7 @@ class AccountAssetXlsxWizard(models.TransientModel):
     )
 
     asset_state = fields.Selection(
-        selection=[("all", "All assets"), ("open", "Open only")],
+        selection=[("all", "All assets"), ("open", "Running only")],
         string="Status",
         default="all",
         required=True,
@@ -35,14 +35,12 @@ class AccountAssetXlsxWizard(models.TransientModel):
         else:
             self.from_date = False
 
-    @api.multi
     def export_report(self):
         self.ensure_one()
         datas = dict()
         report_name = "account_asset_management_xlsx.report_account_asset_xlsx"
         return self.env.ref(report_name).report_action(self, data=datas)
 
-    @api.multi
     def get_profile_datas(self):
         self.ensure_one()
         process_datas = []
@@ -79,12 +77,8 @@ class AccountAssetXlsxWizard(models.TransientModel):
             }
 
             # Mapping selection values
-            fr_context = self._context.copy()
-            fr_context.update({"lang": "fr_FR"})
-            selection_field_values = (
-                self.with_context(fr_context)
-                .env["account.asset"]
-                .fields_get(["state", "method"])
+            selection_field_values = self.env["account.asset"].fields_get(
+                ["state", "method"]
             )
 
             account_assets = self.env["account.asset"].search(
@@ -122,7 +116,6 @@ class AccountAssetXlsxWizard(models.TransientModel):
                     process_datas.append(profile_data)
         return process_datas
 
-    @api.multi
     def get_account_amount_values(self, asset=False):
         self.ensure_one()
         account_amount_values = {}
@@ -155,10 +148,12 @@ class AccountAssetXlsxWizard(models.TransientModel):
             )
 
             amount_before_date_start = sum(
-                [(l["credit"] - l["debit"]) for l in aml_before_date_start]
+                [(aml["credit"] - aml["debit"]) for aml in aml_before_date_start]
             )
 
-            amount_in_range = sum([(l["credit"] - l["debit"]) for l in aml_in_range])
+            amount_in_range = sum(
+                [(aml["credit"] - aml["debit"]) for aml in aml_in_range]
+            )
 
             cum_amo = amount_in_range + amount_before_date_start
             account_amount_values.update(

@@ -1,17 +1,25 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_asset_management_xlsx
+# 	* account_asset_management_xlsx
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2025-09-25 04:35+0000\n"
+"PO-Revision-Date: 2025-09-25 04:35+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "%s by %s"
+msgstr ""
 
 #. module: account_asset_management_xlsx
 #: model:ir.actions.report,name:account_asset_management_xlsx.report_account_asset_xlsx
@@ -20,22 +28,24 @@ msgstr ""
 
 #. module: account_asset_management_xlsx
 #: model:ir.model,name:account_asset_management_xlsx.model_account_asset_xlsx_wizard
+#: model_terms:ir.ui.view,arch_db:account_asset_management_xlsx.view_account_asset_xlsx_wizard
 msgid "Account Asset XLSX Wizard"
 msgstr ""
 
 #. module: account_asset_management_xlsx
-#: model_terms:ir.ui.view,arch_db:account_asset_management_xlsx.view_account_asset_xlsx_wizard
-msgid "Account Asset Xlsx Wizard"
-msgstr ""
-
-#. module: account_asset_management_xlsx
-#: selection:account.asset.xlsx.wizard,asset_state:0
+#: model:ir.model.fields.selection,name:account_asset_management_xlsx.selection__account_asset_xlsx_wizard__asset_state__all
 msgid "All assets"
 msgstr ""
 
 #. module: account_asset_management_xlsx
-#: selection:account.asset.xlsx.wizard,target_move:0
+#: model:ir.model.fields.selection,name:account_asset_management_xlsx.selection__account_asset_xlsx_wizard__target_move__all
 msgid "All moves"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Asset Name"
 msgstr ""
 
 #. module: account_asset_management_xlsx
@@ -49,8 +59,32 @@ msgid "Asset Report Xlsx"
 msgstr ""
 
 #. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Assets And Depreciation"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Beg. Acc. Dep."
+msgstr ""
+
+#. module: account_asset_management_xlsx
 #: model_terms:ir.ui.view,arch_db:account_asset_management_xlsx.view_account_asset_xlsx_wizard
 msgid "Cancel"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Closing : "
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Computation Method"
 msgstr ""
 
 #. module: account_asset_management_xlsx
@@ -59,14 +93,31 @@ msgid "Created by"
 msgstr ""
 
 #. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Created on : "
+msgstr ""
+
+#. module: account_asset_management_xlsx
 #: model:ir.model.fields,field_description:account_asset_management_xlsx.field_account_asset_xlsx_wizard__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Depreciation Expense"
+msgstr ""
+
+#. module: account_asset_management_xlsx
 #: model:ir.model.fields,field_description:account_asset_management_xlsx.field_account_asset_xlsx_wizard__display_name
-#: model:ir.model.fields,field_description:account_asset_management_xlsx.field_report_report_account_asset_xlsx__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "End. Acc. Dep."
 msgstr ""
 
 #. module: account_asset_management_xlsx
@@ -85,15 +136,14 @@ msgid "From Date"
 msgstr ""
 
 #. module: account_asset_management_xlsx
-#: model:ir.model.fields,field_description:account_asset_management_xlsx.field_account_asset_xlsx_wizard__id
-#: model:ir.model.fields,field_description:account_asset_management_xlsx.field_report_report_account_asset_xlsx__id
-msgid "ID"
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Gross Value"
 msgstr ""
 
 #. module: account_asset_management_xlsx
-#: model:ir.model.fields,field_description:account_asset_management_xlsx.field_account_asset_xlsx_wizard____last_update
-#: model:ir.model.fields,field_description:account_asset_management_xlsx.field_report_report_account_asset_xlsx____last_update
-msgid "Last Modified on"
+#: model:ir.model.fields,field_description:account_asset_management_xlsx.field_account_asset_xlsx_wizard__id
+msgid "ID"
 msgstr ""
 
 #. module: account_asset_management_xlsx
@@ -107,13 +157,32 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: account_asset_management_xlsx
-#: selection:account.asset.xlsx.wizard,asset_state:0
-msgid "Open only"
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Nb. of Years"
 msgstr ""
 
 #. module: account_asset_management_xlsx
-#: selection:account.asset.xlsx.wizard,target_move:0
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "No"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Opening : "
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#: model:ir.model.fields.selection,name:account_asset_management_xlsx.selection__account_asset_xlsx_wizard__target_move__posted
 msgid "Posted moves"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Prorata Temporis"
 msgstr ""
 
 #. module: account_asset_management_xlsx
@@ -122,8 +191,33 @@ msgid "Report Account Asset XLSX"
 msgstr ""
 
 #. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Residual Value"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#: model:ir.model.fields.selection,name:account_asset_management_xlsx.selection__account_asset_xlsx_wizard__asset_state__open
+msgid "Running only"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Salvage Value"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
 #: model:ir.model.fields,field_description:account_asset_management_xlsx.field_account_asset_xlsx_wizard__asset_state
 msgid "Status"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Subtotal"
 msgstr ""
 
 #. module: account_asset_management_xlsx
@@ -136,3 +230,14 @@ msgstr ""
 msgid "To Date"
 msgstr ""
 
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Total"
+msgstr ""
+
+#. module: account_asset_management_xlsx
+#. odoo-python
+#: code:addons/account_asset_management_xlsx/report/report_account_asset_xlsx.py:0
+msgid "Yes"
+msgstr ""

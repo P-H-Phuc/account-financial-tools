@@ -34,7 +34,7 @@ This module enables to generate an Asset report in xlsx format.
 
 - Report data can be filtered based on:
 
-  - Asset Status(Open, All)
+  - Asset Status(Running, All)
   - Date
   - Target Move (All Moves, Posted Moves)
   - Asset Profiles
@@ -68,7 +68,10 @@ Contributors
 
 - La Louve <`http://www.lalouve.net/\\> <http://www.lalouve.net/\>>`__
 - Druidoo <`https://www.druidoo.io\\> <https://www.druidoo.io\>>`__
-- Ân Lê Hoàng
+- `Trobz <https://trobz.com>`__:
+
+  - Ân Lê Hoàng
+  - Phan Hồng Phúc
 
 Maintainers
 -----------
