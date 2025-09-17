@@ -4,22 +4,21 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from xlsxwriter.utility import xl_rowcol_to_cell
-from .image_util import get_record_image_path
 
+from odoo import SUPERUSER_ID, fields, models
 from odoo.api import Environment
-from odoo import fields, models, SUPERUSER_ID
+
+from .image_util import get_record_image_path
 
 
 class ReportAccountAssetXlsx(models.AbstractModel):
-    _inherit = 'report.report_xlsx.abstract'
-    _name = 'report.report_account_asset_xlsx'
+    _inherit = "report.report_xlsx.abstract"
+    _name = "report.report_account_asset_xlsx"
     _description = "Report Account Asset XLSX"
 
     def create_xlsx_report(self, ids, data):
         self.env = Environment(self.env.cr, SUPERUSER_ID, self.env.context)
-        return super(ReportAccountAssetXlsx, self).create_xlsx_report(
-            ids, data
-        )
+        return super().create_xlsx_report(ids, data)
 
     def generate_xlsx_report(self, workbook, data, objects):
         self.object = objects[0]
@@ -113,7 +112,8 @@ class ReportAccountAssetXlsx(models.AbstractModel):
         company = self.env.user.company_id
         company_logo = company.logo
         company_logo_path = get_record_image_path(
-            record=company, image=company_logo,
+            record=company,
+            image=company_logo,
         )
         if company_logo_path:
             self.sheet.insert_image(0, 0, company_logo_path)
@@ -131,9 +131,7 @@ class ReportAccountAssetXlsx(models.AbstractModel):
         created_by_header = "Créé le : "
         created_uid = self.object._context.get("uid", self.env.uid)
         created_user = self.env["res.users"].browse(created_uid)
-        created_by_info = "{} par {}".format(
-            formated_today_str, created_user.name
-        )
+        created_by_info = f"{formated_today_str} par {created_user.name}"
         self.sheet.write_rich_string(
             row_pos,
             col_pos,
@@ -236,9 +234,7 @@ class ReportAccountAssetXlsx(models.AbstractModel):
                     cell_format = self.format_table_number_bold
                     start_cell = xl_rowcol_to_cell(start_row_pos, col_pos)
                     stop_cell = xl_rowcol_to_cell(stop_row_pos, col_pos)
-                    cell_formula_value = cell_value.format(
-                        start_cell, stop_cell
-                    )
+                    cell_formula_value = cell_value.format(start_cell, stop_cell)
                     self.sheet.write_formula(
                         row_pos, col_pos, cell_formula_value, cell_format
                     )
@@ -298,78 +294,56 @@ class ReportAccountAssetXlsx(models.AbstractModel):
         self.format_default = workbook.add_format(format_config)
 
         format_bold = format_config.copy()
-        format_bold.update(
-            {"bold": True}
-        )
+        format_bold.update({"bold": True})
         self.format_bold = workbook.add_format(format_bold)
 
         format_center = format_config.copy()
-        format_center.update(
-            {"align": "center"}
-        )
+        format_center.update({"align": "center"})
         self.format_center = workbook.add_format(format_center)
 
         # ---------------------------------------------------------------------
         # Report Title
         # ---------------------------------------------------------------------
         format_report_title = format_config.copy()
-        format_report_title.update(
-            {"bold": True, "align": "center", "font_size": 36}
-        )
+        format_report_title.update({"bold": True, "align": "center", "font_size": 36})
         self.format_report_title = workbook.add_format(format_report_title)
 
         format_title_table = format_config.copy()
-        format_title_table.update(
-            {"bold": True, "align": "center"}
-        )
+        format_title_table.update({"bold": True, "align": "center"})
         self.format_title_table = workbook.add_format(format_title_table)
 
         # ---------------------------------------------------------------------
         # Table format
         # ---------------------------------------------------------------------
         format_table = format_config.copy()
-        format_table.update(
-            {"font_size": 11, "bold": True, "align": "vcenter"}
-        )
+        format_table.update({"font_size": 11, "bold": True, "align": "vcenter"})
         self.format_table = workbook.add_format(format_table)
         self.format_table.set_bg_color("#0070c0")
         self.format_table.set_font_color("#ffffff")
 
         format_table_header = format_table.copy()
-        format_table_header.update(
-            {"font_size": 10}
-        )
+        format_table_header.update({"font_size": 10})
         self.format_table_header = workbook.add_format(format_table_header)
         self.format_table_header.set_bg_color("#d9d9d9")
         self.format_table_header.set_font_color("#000000")
 
         format_table_bold = format_table.copy()
-        format_table_bold.update(
-            {"font_size": 10}
-        )
+        format_table_bold.update({"font_size": 10})
         self.format_table_bold = workbook.add_format(format_table_bold)
         self.format_table_bold.set_bg_color("#d9d9d9")
         self.format_table_bold.set_font_color("#000000")
 
         format_table_bold_total = format_table.copy()
-        format_table_bold_total.update(
-            {"font_size": 11, "align": "right"}
-        )
+        format_table_bold_total.update({"font_size": 11, "align": "right"})
 
         format_table_number = format_table.copy()
-        format_table_number.update(
-            {"font_size": 10, "bold": False}
-        )
+        format_table_number.update({"font_size": 10, "bold": False})
         self.format_table_number = workbook.add_format(format_table_number)
         self.format_table_number.set_num_format("#,##0.00")
 
         format_table_number_bold = format_table.copy()
-        format_table_number_bold.update(
-            {"font_size": 10}
-        )
-        self.format_table_number_bold = workbook.add_format(
-            format_table_number_bold
-        )
+        format_table_number_bold.update({"font_size": 10})
+        self.format_table_number_bold = workbook.add_format(format_table_number_bold)
         self.format_table_number_bold.set_num_format("#,##0.00")
         self.format_table_number_bold.set_bg_color("#d9d9d9")
         self.format_table_number_bold.set_font_color("#000000")
@@ -378,9 +352,7 @@ class ReportAccountAssetXlsx(models.AbstractModel):
         format_table_date.update({"num_format": "dd/mm/yyyy", "font_size": 10})
         self.format_table_date = workbook.add_format(format_table_date)
 
-        self.format_table_header_dark_grey = workbook.add_format(
-            format_table_header
-        )
+        self.format_table_header_dark_grey = workbook.add_format(format_table_header)
         self.format_table_header_dark_grey.set_bg_color("#808080")
         self.format_table_header_dark_grey.set_font_color("#000000")
 

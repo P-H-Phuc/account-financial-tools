@@ -39,7 +39,7 @@ class AccountAssetXlsxWizard(models.TransientModel):
     def export_report(self):
         self.ensure_one()
         datas = dict()
-        report_name = 'account_asset_management_xlsx.report_account_asset_xlsx'
+        report_name = "account_asset_management_xlsx.report_account_asset_xlsx"
         return self.env.ref(report_name).report_action(self, data=datas)
 
     @api.multi
@@ -91,12 +91,8 @@ class AccountAssetXlsxWizard(models.TransientModel):
                 domain, order="profile_id,id"
             )
 
-            asset_state_dict = dict(
-                selection_field_values["state"]["selection"]
-            )
-            asset_method_dict = dict(
-                selection_field_values["method"]["selection"]
-            )
+            asset_state_dict = dict(selection_field_values["state"]["selection"])
+            asset_method_dict = dict(selection_field_values["method"]["selection"])
             for asset in account_assets:
                 asset_profile = asset.profile_id
                 asset_data = asset.sudo().read(read_line_fields)
@@ -112,12 +108,9 @@ class AccountAssetXlsxWizard(models.TransientModel):
                         line_data[column] = new_value
 
                 if line_data and asset_profile:
-                    account_amount_values = self.get_account_amount_values(
-                        asset
-                    )
+                    account_amount_values = self.get_account_amount_values(asset)
                     having_account_amount = any(
-                        value != 0 for value in list(
-                            account_amount_values.values())
+                        value != 0 for value in list(account_amount_values.values())
                     )
                     if not having_account_amount:
                         continue
@@ -138,9 +131,7 @@ class AccountAssetXlsxWizard(models.TransientModel):
         sign = -1
         if asset:
             asset_profile = asset.profile_id
-            profile_asset_depreciation_account = (
-                asset_profile.account_depreciation_id
-            )
+            profile_asset_depreciation_account = asset_profile.account_depreciation_id
             # Calculate history and the selected range account values
             aml_period_domain = [
                 ("asset_id", "=", asset.id),
@@ -167,9 +158,7 @@ class AccountAssetXlsxWizard(models.TransientModel):
                 [(l["credit"] - l["debit"]) for l in aml_before_date_start]
             )
 
-            amount_in_range = sum(
-                [(l["credit"] - l["debit"]) for l in aml_in_range]
-            )
+            amount_in_range = sum([(l["credit"] - l["debit"]) for l in aml_in_range])
 
             cum_amo = amount_in_range + amount_before_date_start
             account_amount_values.update(

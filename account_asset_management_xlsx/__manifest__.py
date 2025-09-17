@@ -9,7 +9,7 @@
     "category": "Accounting",
     "summary": "account_asset_management_xlsx",
     "author": "Simon Mas,  Ân Lê Hoàng",
-    "website": "https://cooplalouve.fr",
+    "website": "https://github.com/OCA/account-financial-tools",
     "license": "AGPL-3",
     "depends": [
         "account_asset_management",

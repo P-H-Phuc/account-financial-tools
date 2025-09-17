@@ -1,10 +1,11 @@
 # Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
 
-from odoo.tools import image as IMG
 import base64
-import os
 import logging
+import os
 import tempfile
+
+from odoo.tools import image as IMG
 
 _logger = logging.getLogger(__name__)
 
